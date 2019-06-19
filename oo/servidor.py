@@ -63,3 +63,6 @@ class Servidor:
 
     def acrescentar_tarefa(self, quantidade_de_ciclos=3, velocidade_de_consumo=1):
         self._tarefas.append(Tarefa(quantidade_de_ciclos, velocidade_de_consumo))
+
+
+

@@ -1,3 +1,4 @@
-from versao.biblioteca import funcao_legal
+from versao.biblioteca import funcao_legal, funcao_mais_legal
 
-print(funcao_legal())
+funcao_legal()
+funcao_mais_legal()

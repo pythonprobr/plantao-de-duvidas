@@ -1,4 +1,4 @@
-def funcao_legal():
+def legal(c=0):
     print('Executando função legal')
 
 

@@ -1,2 +1,2 @@
 def funcao_legal():
-    print('Execuntado funcao legal')
+    print('Executando função legal')

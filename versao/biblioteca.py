@@ -1,2 +1,2 @@
-def f():
+def funcao_legal():
     print('Execuntado f')

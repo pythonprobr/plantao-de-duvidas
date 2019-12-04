@@ -71,7 +71,8 @@ O   L
     >>> direcao.girar_a_esquerda()
     >>> direcao.valor
     'Norte'
-    >>> carro = Carro(direcao, motor, LuzDeFreio())
+    >>> luz_de_freio = LuzDeFreio()
+    >>> carro = Carro(direcao, motor, luz_de_freio)
     >>> carro.velocidade
     0
     >>> carro.acelerar()
@@ -98,6 +99,13 @@ O   L
     >>> carro.direcao.girar_a_esquerda()
     >>> carro.direcao.valor
     'Oeste'
+    >>> motor_de_ferrari = MotorDeFerrari()
+    >>> ferrari = Carro(direcao, motor_de_ferrari, luz_de_freio)
+    >>> ferrari.velocidade
+    0
+    >>> ferrari.acelerar()
+    >>> ferrari.velocidade
+    10
 """
 
 
@@ -106,7 +114,7 @@ class LuzDeFreio:
         self.status = 'Desligada'
 
     def ligar(self):
-        self.status='Ligada'
+        self.status = 'Ligada'
 
 
 class Carro:
@@ -132,6 +140,8 @@ class Carro:
 
 
 class Motor:
+    _taxa_de_aceleracao = 1
+
     def __init__(self, velocidade=0):
         self.velocidade = velocidade
 
@@ -139,12 +149,16 @@ class Motor:
         return self.velocidade
 
     def acelerar_com_fio(self):
-        self.velocidade += 1
+        self.velocidade += self._taxa_de_aceleracao
 
     def frear(self):
         self.velocidade -= 2
         if self.velocidade < 0:
             self.velocidade = 0
+
+
+class MotorDeFerrari(Motor):
+    _taxa_de_aceleracao = 10
 
 
 class Direcao:

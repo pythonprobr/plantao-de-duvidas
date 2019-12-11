@@ -40,6 +40,7 @@ _resp_renzon = loads('''{
 
 
 def get_mock(user):
+    get_mock.user=user
     return _resp_renzon
 
 
@@ -50,7 +51,7 @@ def mockar_get_js():
     get = github._get_js
     github._get_js = get_mock
     print('Retornando yield')
-    yield 'get mockado'
+    yield get_mock
     print('Tear Down')
     # Tear Down
     github._get_js = get
@@ -59,6 +60,10 @@ def mockar_get_js():
 def test_avatar(mockar_get_js):
     # Test
     assert "https://avatars3.githubusercontent.com/u/3457115?v=4" == github.get_avatar('renzon')
+
+def test_js_called_with_user_name(mockar_get_js):
+    # Test
+    assert mockar_get_js.user == 'renzon'
 
 
 def test_avatar_victor():

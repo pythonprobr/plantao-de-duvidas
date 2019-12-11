@@ -39,31 +39,20 @@ _resp_renzon = loads('''{
 }''')
 
 
-def get_mock(user):
-    get_mock.user=user
-    return _resp_renzon
-
-
 @pytest.fixture
-def mockar_get_js():
-    # Setup
-    print('Setup')
-    get = github._get_js
-    github._get_js = get_mock
-    print('Retornando yield')
-    yield get_mock
-    print('Tear Down')
-    # Tear Down
-    github._get_js = get
+def mockar_get_js(mocker):
+    yield mocker.patch('api.github._get_js', return_value=_resp_renzon)
 
 
 def test_avatar(mockar_get_js):
     # Test
     assert "https://avatars3.githubusercontent.com/u/3457115?v=4" == github.get_avatar('renzon')
 
+
 def test_js_called_with_user_name(mockar_get_js):
     # Test
-    assert mockar_get_js.user == 'renzon'
+    github.get_avatar('renzon')
+    mockar_get_js.assert_called_once_with('renzon')
 
 
 def test_avatar_victor():

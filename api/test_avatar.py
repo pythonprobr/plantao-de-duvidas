@@ -1,8 +1,10 @@
 from json import loads
 
+import pytest
+
 from api import github
 
-_resp_renzon=loads('''{
+_resp_renzon = loads('''{
 "login": "renzon",
 "id": 3457115,
 "node_id": "MDQ6VXNlcjM0NTcxMTU=",
@@ -36,17 +38,29 @@ _resp_renzon=loads('''{
 "updated_at": "2019-12-03T20:43:44Z"
 }''')
 
-class ResponseMock:
-    def json(self):
-        return _resp_renzon
-
 
 def get_mock(user):
-    return ResponseMock()
+    return _resp_renzon
 
-def test_avatar():
-    #Setup
-    github.requests.get = get_mock
 
-    #Test
+@pytest.fixture
+def mockar_get_js():
+    # Setup
+    print('Setup')
+    get = github._get_js
+    github._get_js = get_mock
+    print('Retornando yield')
+    yield 'get mockado'
+    print('Tear Down')
+    # Tear Down
+    github._get_js = get
+
+
+def test_avatar(mockar_get_js):
+    # Test
     assert "https://avatars3.githubusercontent.com/u/3457115?v=4" == github.get_avatar('renzon')
+
+
+def test_avatar_victor():
+    # Test
+    assert "https://avatars2.githubusercontent.com/u/51089294?v=4" == github.get_avatar('Lnvictor')
